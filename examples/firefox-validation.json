@@ -1,0 +1,49 @@
+{
+  "test_date": "2026-10-10",
+  "browser": "Firefox Developer Edition 158.0b5 deb",
+  "vaapi_driver": "nvidia-vaapi-driver v0.0.18",
+  "driver": "NVIDIA 615.71.09",
+  "window_protocol": "wayland",
+  "renderer": "NVIDIA GeForce RTX 5070 Ti Laptop GPU/PCIe/SSE2",
+  "codec_support": "H264 SWDEC HWDEC\nVP9 SWDEC HWDEC\nVP8 SWDEC HWDEC\nAV1 SWDEC HWDEC\nHEVC SWDEC HWDEC\nAAC SWDEC\nMP3 SWDEC\nOpus SWDEC\nVorbis SWDEC\nFLAC SWDEC\nWave SWDEC",
+  "rdd_sandbox_disabled": true,
+  "test_profile": "isolated empty diagnostic profile",
+  "test_uid": "root desktop session (daily regular-user usage recommended)",
+  "vaapi_dmabuf_decoded_surfaces": 913,
+  "playback": [
+    {
+      "codec": "test-h264.mp4",
+      "quality": {
+        "total": 301,
+        "dropped": 0
+      },
+      "error": null
+    },
+    {
+      "codec": "test-vp9.webm",
+      "quality": {
+        "total": 301,
+        "dropped": 1
+      },
+      "error": null
+    },
+    {
+      "codec": "test-av1.webm",
+      "quality": {
+        "total": 301,
+        "dropped": 1
+      },
+      "error": null
+    }
+  ],
+  "scope": "H264, VP9, AV1 actual playback; VP8/HEVC advertised capability only; encoding unavailable in this VA-API driver",
+  "daily_configuration": "installed after explicit user acceptance of RDD sandbox tradeoff; existing daily process needs restart",
+  "installed_launcher_smoke_test": {
+    "codec": "AV1",
+    "protocol": "wayland",
+    "vaapi_decoded_surfaces": 305,
+    "total_frames": 302,
+    "dropped_frames": 1,
+    "error": null
+  }
+}

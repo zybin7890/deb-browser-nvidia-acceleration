@@ -1,0 +1,93 @@
+{
+  "scope": "isolated profiles; local generated 1080p30 8-bit media; no user browsing data",
+  "chrome_version": "155.0.8059.39",
+  "display_backend": "native Wayland",
+  "gpu": "NVIDIA GeForce RTX 5070 Ti Laptop GPU",
+  "nvidia_driver": "615.71.09",
+  "vaapi_driver": {
+    "tag": "v0.0.18",
+    "commit": "982ba1c2464b9cea5a4403df8f2c5a351ca21394",
+    "system_driver_overwritten": false,
+    "vp9_compiled": true
+  },
+  "results": [
+    {
+      "codec": "H.264",
+      "resolution": "1920x1080",
+      "final_decoder": "VaapiVideoDecoder",
+      "platform_decoder": true,
+      "observed_total_frames": 294,
+      "dropped_frames": 0
+    },
+    {
+      "codec": "VP9",
+      "resolution": "1920x1080",
+      "final_decoder": "VaapiVideoDecoder",
+      "platform_decoder": true,
+      "observed_total_frames": 295,
+      "dropped_frames": 1
+    },
+    {
+      "codec": "AV1",
+      "resolution": "1920x1080",
+      "final_decoder": "VaapiVideoDecoder",
+      "platform_decoder": true,
+      "observed_total_frames": 294,
+      "dropped_frames": 0
+    }
+  ],
+  "sandbox": {
+    "no_sandbox_disable_flags": true,
+    "gpu_reported_sandboxed": false,
+    "process_sample": [
+      {
+        "role": "gpu-process",
+        "seccomp": 0,
+        "no_new_privileges": true
+      },
+      {
+        "role": "renderer",
+        "seccomp": 2,
+        "no_new_privileges": true
+      },
+      {
+        "role": "renderer",
+        "seccomp": 2,
+        "no_new_privileges": true
+      },
+      {
+        "role": "renderer",
+        "seccomp": 2,
+        "no_new_privileges": true
+      },
+      {
+        "role": "renderer",
+        "seccomp": 2,
+        "no_new_privileges": true
+      },
+      {
+        "role": "renderer",
+        "seccomp": 2,
+        "no_new_privileges": true
+      },
+      {
+        "role": "renderer",
+        "seccomp": 2,
+        "no_new_privileges": true
+      }
+    ]
+  },
+  "limitations": [
+    "8-bit test media only; not DRM/HDR/HEVC validation",
+    "GPU process has no seccomp filter in this observed session",
+    "Intel rendering test failed at Wayland DMA-BUF modifier import"
+  ],
+  "installed_launcher_smoke_test": {
+    "codec": "AV1",
+    "resolution": "1920x1080",
+    "final_decoder": "VaapiVideoDecoder",
+    "platform_decoder": true,
+    "observed_total_frames": 293,
+    "dropped_frames": 0
+  }
+}

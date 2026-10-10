@@ -1,0 +1,37 @@
+# Private browser state and local captures
+profiles/
+profile/
+user-data/
+private/
+logs/
+captures/
+*.log
+*.dmp
+*.core
+core
+core.*
+media-internals*.json
+about-support*.txt
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+cookies*
+Cookies*
+Login\ Data*
+Local\ State
+Preferences
+user.js
+prefs.js
+.env
+.env.*
+credentials*
+
+# Local builds and downloaded packages are not repository artifacts
+build/
+dist/
+*.deb
+*.ddeb
+*.tar.*
+__pycache__/
+*.py[cod]
+.DS_Store
