@@ -46,6 +46,7 @@ NVIDIA 的监控指标会因 GPU、驱动和采样方式而不同；`N/A` 或一
 ## 文档
 
 - [诊断步骤与证据判读](docs/diagnosis.md)
+- [Firefox Wayland DMA-BUF 崩溃的对照验证与 SDR 调整](docs/firefox-wayland-dmabuf.md)。
 - [Firefox 专项配置与验证](docs/firefox.md)，[显式选择的启动示例](scripts/firefox-nvidia.sh)，[脱敏验证摘要](examples/firefox-validation.json)。
 - [Chrome 专项配置与验证](docs/chrome.md)，[启动器](scripts/chrome-nvidia.sh)，[脱敏验证摘要](examples/chrome-validation.json)。
 

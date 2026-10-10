@@ -40,6 +40,10 @@ bash scripts/firefox-nvidia.sh
 
 重新运行浏览器后，检查 `about:support` 的窗口协议与媒体能力，播放已知编码视频并查看 `MOZ_LOG=PlatformDecoderModule:5,Dmabuf:4` 日志中的实际 VA-API 解码表面。日志可能带播放地址，不要原样公开。
 
+## Wayland 播放崩溃
+
+若报 `importing the supplied dmabufs failed`，能力表与解码成功仍不足以确认显示路径正常。本机通过独立对照复现了 HDR 开关触发的 10-bit 视频导入崩溃，关闭 HDR 输出后保留 NVIDIA 硬解；见 [专项验证和代价](firefox-wayland-dmabuf.md)。
+
 ## 回滚
 
 正常退出 Firefox；恢复 `user.js` 备份，恢复原启动入口，移除该入口中的 NVIDIA 与 RDD 环境变量。独立驱动目录可保留而不再引用，系统原有 VA-API 驱动不被本项目覆盖。

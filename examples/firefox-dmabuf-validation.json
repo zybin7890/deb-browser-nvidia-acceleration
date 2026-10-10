@@ -1,0 +1,62 @@
+{
+  "test_date": "2026-10-10",
+  "environment": "Firefox Developer Edition 158.0b5 deb, KDE Wayland, NVIDIA 615.71.09, private nvidia-vaapi-driver v0.0.18",
+  "isolation": "empty diagnostic profile, synthetic local media; daily browser data not inspected",
+  "before": {
+    "gfx.color_management.hdr": true,
+    "test_sample": "10-bit VP9 Profile 2 (BT.2020 matrix; transfer/primaries unspecified in parsed WebM)",
+    "result": "Firefox exited during playback, Marionette connection ended",
+    "graphics_error": "zwp_linux_buffer_params_v1 error 7: importing the supplied dmabufs failed",
+    "webrender_compositor": "available",
+    "video_hdr": "available"
+  },
+  "after": {
+    "gfx.color_management.hdr": false,
+    "gfx.color_management.hdr.force_enabled": false,
+    "vaapi_decoded_surfaces_three_samples": 918,
+    "playback": [
+      {
+        "sample": "test-vp9-hdr10.webm",
+        "frames": {
+          "total": 300,
+          "dropped": 1
+        },
+        "error": null
+      },
+      {
+        "sample": "test-h264.mp4",
+        "frames": {
+          "total": 300,
+          "dropped": 0
+        },
+        "error": null
+      },
+      {
+        "sample": "test-av1.webm",
+        "frames": {
+          "total": 301,
+          "dropped": 1
+        },
+        "error": null
+      }
+    ],
+    "hardware_video_decoding": "force_enabled",
+    "webrender_compositor": "blocklisted",
+    "video_hdr": "blocklisted"
+  },
+  "hevc_hdr_after": {
+    "sample": "HEVC Main 10, 1920x1080, yuv420p10le, BT.2020 primaries/matrix, SMPTE ST 2084 transfer",
+    "playback": [
+      {
+        "sample": "test-hevc-hdr10.mp4",
+        "frames": {
+          "total": 301,
+          "dropped": 0
+        },
+        "error": null
+      }
+    ],
+    "vaapi_decoded_surfaces": 308
+  },
+  "limits": "Sample playback demonstrates this reproduced failure is avoided; not a guarantee against all Wayland/GPU crashes. HDR output is disabled; NVIDIA decoding and Wayland retained."
+}
