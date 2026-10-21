@@ -4,6 +4,45 @@
 
 这里公开的是修复方法和原创工具；各浏览器、NVIDIA 驱动与 VA-API 驱动仍遵循各自的许可证。
 
+## 一键安装
+
+在 **Debian/Ubuntu 的普通用户、原生 Wayland 桌面**运行；先确保 `git`、deb 浏览器和 NVIDIA 显卡驱动可用。首次安装可直接复制这一行，下载完整仓库并启动安装：
+
+```bash
+git clone --depth 1 https://github.com/zybin7890/deb-browser-nvidia-acceleration.git && bash deb-browser-nvidia-acceleration/setup.sh --install-deps
+```
+
+如果已经下载或克隆本仓库，在仓库目录运行：
+
+```bash
+bash setup.sh --install-deps
+```
+
+默认优先选择 Chrome；只有 Firefox 时会提示必须显式接受 RDD 沙箱取舍。`--install-deps` 仅为 apt 安装依赖调用 sudo，不要用 `sudo bash setup.sh`。已经备好构建依赖可省略该选项。Firefox 或同时安装两种浏览器：
+
+```bash
+# 关闭 Firefox RDD 媒体解码沙箱会降低媒体漏洞隔离保护；仅在接受后运行。
+bash setup.sh --browser firefox --install-deps --allow-unsandboxed-rdd
+bash setup.sh --browser both --install-deps --allow-unsandboxed-rdd
+```
+
+安装器从官方仓库下载 **v0.0.18**，校验提交 `982ba1c2464b9cea5a4403df8f2c5a351ca21394`，检查包括 VP9 codecparsers 的构建依赖，只复制编译后的驱动到 `~/.local/share/deb-browser-nvidia/`（遵循 `XDG_DATA_HOME`）。先运行 `vainfo`，成功后才启用新入口。生成独立的 **Chrome / Firefox (NVIDIA VA-API)** 应用菜单入口，保留系统驱动、原浏览器入口及默认浏览器设置。
+
+Firefox 自动配置项目独立 profile，不会读取或修改日常 profile，也不会带入原来的登录状态。重装时保留其现有 `user.js`；不自动修改 HDR 设置。Chrome 沿用自己的默认 profile；请保存工作并正常退出旧浏览器，再从新入口启动，避免复用旧进程而忽略加速参数。显式选择 NVIDIA 可能增加耗电。
+
+```bash
+bash setup.sh --dry-run                       # 只看计划，不下载或写入
+bash setup.sh --check                         # 只读检查，不能证明实际播放硬解
+bash setup.sh --driver-dir /path/to/driver    # 复用已有私有 .so，不编译；版本由使用者确认
+bash setup.sh --rollback                      # 回滚最近一次安装的入口
+```
+
+`--check` 与 `--dry-run` 也需要在目标 Linux 桌面运行。自定义浏览器可设置 `CHROME_BINARY` / `FIREFOX_BINARY`。安装器排除可识别的 Snap/Flatpak 入口；特殊封装仍须使用者确认安装渠道。它不会安装浏览器、显卡驱动或自动修改内核启动参数。若缺少 NVIDIA render node 的读写权限，请按发行版要求修复权限，不要以 root 启动浏览器。
+
+回滚会恢复上次安装前的项目菜单入口和驱动入口，首次安装则停用这些新入口；保留驱动构建目录、备份和独立 Firefox profile，不卸载 apt 依赖。若安装后手动修改了菜单入口，回滚会停止并提示，避免覆盖新修改。失败且尚未发布入口的构建目录也保留用于排错。
+
+**安装完成仅表示配置就绪。** 仍需按下文逐个 codec 播放确认当前解码器、持续帧输出和 GPU 解码活动。历史测试结果与本次机器的结果应分别记录。
+
 ## 当前验证状态
 
 记录日期：2026-10-10。以下结果来自同一测试环境，不代表所有版本或所有网站的视频都可硬解。
@@ -53,6 +92,8 @@ NVIDIA 的监控指标会因 GPU、驱动和采样方式而不同；`N/A` 或一
 配置应优先局限于浏览器自身的启动器与设置。专项文档会记录所需版本、修改项、验证方法和回滚方式；主文档不把未验证的参数组合当作通用解法。
 
 ## 发布和贡献
+
+脚本验证：`bash -n setup.sh`、`shellcheck setup.sh scripts/*.sh tests/*.sh`、普通用户运行 `bash tests/smoke.sh`。隔离测试模拟 GPU、VA-API 和浏览器，只验证安装/入口/回滚控制逻辑；Git Bash 下另模拟缺失的 `flock`，不验证内核文件锁。GitHub Actions 在 Linux 上执行同组检查，不能替代 NVIDIA 桌面实际播放验收。
 
 提交问题时请提供操作系统、浏览器、GPU、驱动、VA-API 驱动版本，以及视频编码格式和脱敏后的解码器摘要。使用公开测试视频或自己生成的样本，保留可复现的步骤。
 

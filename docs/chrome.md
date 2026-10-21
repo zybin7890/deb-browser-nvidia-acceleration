@@ -10,6 +10,8 @@
 
 ## 独立构建驱动
 
+也可在仓库根目录运行 `bash setup.sh --browser chrome --install-deps`，自动构建到用户目录并创建独立菜单入口；选项和回滚见 [一键安装](../README.md#一键安装)。下面保留手动构建方法。
+
 优先使用发行版已经验证支持 Chromium 的新版本。需要自己构建时，依赖名称以发行版为准；上游列出的 Debian/Ubuntu 依赖包括 Meson、GCC、pkg-config、libva、EGL、DRM、NV codec headers。VP9 还需要 GStreamer codecparsers 开发文件。
 
 ```bash

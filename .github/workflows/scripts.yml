@@ -1,0 +1,13 @@
+name: Shell checks
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  scripts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y shellcheck
+      - run: bash -n setup.sh && for script in scripts/*.sh tests/*.sh; do bash -n "$script"; done
+      - run: shellcheck setup.sh scripts/*.sh tests/*.sh
+      - run: bash tests/smoke.sh

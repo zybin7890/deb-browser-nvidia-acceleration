@@ -16,6 +16,8 @@ VP8、HEVC 在能力表中报告 HWDEC，但未做此次实际播放验证。音
 
 ## 安全取舍与日常启用
 
+需要自动安装时，在仓库根目录运行 `bash setup.sh --browser firefox --install-deps --allow-unsandboxed-rdd`。安装器只配置项目独立 profile，并生成单独菜单入口，不合并或改写日常 profile；完整说明见 [一键安装](../README.md#一键安装)。下面的手动配置方法用于自行选择日常 profile 的场景。
+
 **`MOZ_DISABLE_RDD_SANDBOX=1` 关闭 RDD 媒体解码进程沙箱，会降低恶意媒体触发解码漏洞时的隔离保护。** 它不等于关闭全部浏览器沙箱；仍不应把这个改动说成没有安全影响。[驱动上游配置说明](https://github.com/elFarto/nvidia-vaapi-driver#firefox)
 
 日常配置需要明确接受此取舍。本项目的启动示例默认拒绝执行，需显式设置 `FIREFOX_NVIDIA_ALLOW_UNSANDBOXED_RDD=1`。本机用户明确接受这一取舍后，已安装 Firefox 专用入口及配置，并保存回滚备份。已有浏览器进程需正常退出再启动，才会采用新环境。另一方案是保留 RDD 沙箱，使用 Intel 核显解码，需另行实测。

@@ -6,7 +6,13 @@ if [[ ${EUID:-$(id -u)} == 0 ]]; then
   exit 1
 fi
 chrome_binary=${CHROME_BINARY:-google-chrome-stable}
-vaapi_dir=${CHROME_NV_VAAPI_DIR:-/usr/local/lib/browser-nvidia-vaapi}
+command -v -- "$chrome_binary" >/dev/null || { echo "Browser not found: $chrome_binary" >&2; exit 1; }
+[[ -n ${WAYLAND_DISPLAY:-} ]] || { echo 'Run this launcher in a native Wayland desktop session.' >&2; exit 1; }
+user_vaapi_dir=${XDG_DATA_HOME:-$HOME/.local/share}/deb-browser-nvidia/current/lib
+vaapi_dir=${CHROME_NV_VAAPI_DIR:-$user_vaapi_dir}
+if [[ -z ${CHROME_NV_VAAPI_DIR:-} && ! -r $vaapi_dir/nvidia_drv_video.so ]]; then
+  vaapi_dir=/usr/local/lib/browser-nvidia-vaapi
+fi
 if [[ ! -r "$vaapi_dir/nvidia_drv_video.so" ]]; then
   echo "Missing private VA-API driver: $vaapi_dir/nvidia_drv_video.so" >&2
   exit 1
